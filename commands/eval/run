@@ -1,11 +1,11 @@
 const { NodeVM } = require('vm2')
 const { inspect } = require('util')
 
-process.on('message', async ({ args, flags, ctx }) => {
+process.on('message', async ({ args, ctx }) => {
 
     const vm = new NodeVM({
         timeout: 1000,
-        sandbox: ctx,
+        sandbox: { ...ctx, args },
         eval: false,
         require: {
             external: {
@@ -18,7 +18,7 @@ process.on('message', async ({ args, flags, ctx }) => {
 
     try {
         evaled = await vm.run(`module.exports = (async () => {
-            ${ flags.r ? 'return' : '' } ${args}
+            ${ args.flags.r ? 'return' : '' } ${args.join(' ')}
         })()`, __filename)
     } catch (e) {
         evaled = e
