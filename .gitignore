@@ -1,2 +1,4 @@
 node_modules/
+pgadmin/
 config.json
+docker-compose.yml

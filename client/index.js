@@ -1,5 +1,6 @@
 const { Client, Collection } = require('discord.js')
 const { sync } = require('glob')
+const util = require('../util')
 
 class Args extends Array {
     constructor(str = '', len = 0) {
@@ -20,15 +21,16 @@ class Args extends Array {
     toString() {
         return this.join(' ')
     }
+
 }
 
 class EvalClient extends Client {
-    constructor(config = { token: '', prefix: '' }) {
+    constructor() {
         super({ intents: ['GUILDS', 'GUILD_MESSAGES'] })
 
-        this.config = config
-        this.token = config.token
-        this.prefix = config.prefix
+        this.prefix = process.env['PREFIX'] || '!!'
+
+        this.util = util
 
         this.commands = new Collection()
     }

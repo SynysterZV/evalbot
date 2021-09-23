@@ -1,7 +1,0 @@
-version: '3.2'
-
-services:
-  eval:
-    build:
-      context: .
-      dockerfile: Dockerfile

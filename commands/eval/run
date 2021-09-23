@@ -18,7 +18,7 @@ process.on('message', async ({ args, ctx }) => {
 
     try {
         evaled = await vm.run(`module.exports = (async () => {
-            ${ args.flags.r ? 'return' : '' } ${args.join(' ')}
+            ${ args.flags.r ? '' : 'return' } ${args.join(' ')}
         })()`, __filename)
     } catch (e) {
         evaled = e

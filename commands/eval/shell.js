@@ -13,6 +13,8 @@ module.exports = {
     exec(message, args) {
         if(message.author.id != '372516983129767938') return
 
-        return message.channel.send({ content: execSync(`${args}`).toString() })
+        const output = execSync(`${args}`).toString()
+
+        message.client.util.trivialSend(message, output)
     }
 }

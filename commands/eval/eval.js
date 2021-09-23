@@ -1,4 +1,5 @@
 const { Message } = require('discord.js')
+const { inspect } = require('util')
 const { fork } = require('child_process')
 const { sep } = require('path')
 
@@ -12,14 +13,28 @@ module.exports = {
      */
 
     async exec(message, args) {
-        if(`${args}`.includes('eval')) return message.channel.send('You cannot use eval functions within this eval')
+        
+        if(message.author.id == '372516983129767938') {
+            let evaled 
+            
+            try {
+                evaled = await eval(`( async () => {
+                    return ${args}
+                })()`)
+            } catch (e) {
+                evaled = e
+            }
+
+            if(typeof evaled != 'string') evaled = inspect(evaled, { depth: 0 })
+
+            return message.client.util.trivialSend(message, evaled, 'js')
+        }
 
         const child = fork(__dirname + sep + 'run' , [], { timeout: 2e3, serialization: 'advanced' })
         child.send({ args, ctx: { message } })
 
         child.on('message', (evaled) => {
-            if(evaled.length > 2000) message.channel.send({ files: [{ name: 'output.js', attachment: Buffer.from(evaled) }] })
-            else message.channel.send(`\`\`\`js\n${evaled}\n\`\`\``)
+            message.client.util.trivialSend(message, evaled, 'js')
         })
     }
 }
