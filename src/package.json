@@ -1,0 +1,30 @@
+{
+	"name": "evalbot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"format": "npx prettier -w .",
+		"lint": "npx eslint",
+		"start": "docker-compose up -d --build --force-recreate",
+		"start:dev": "npx env-cmd node .",
+		"stop": "docker-compose down"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^13.1.0",
+		"env-cmd": "^10.1.0",
+		"glob": "^7.1.7",
+		"node-fetch": "^2.6.3",
+		"vm2": "^3.9.3"
+	},
+	"devDependencies": {
+		"eslint": "^7.32.0",
+		"eslint-config-marine": "^9.0.6",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"prettier": "^2.4.1"
+	}
+}

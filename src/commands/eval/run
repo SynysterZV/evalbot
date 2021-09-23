@@ -27,4 +27,5 @@ process.on('message', async ({ args, ctx }) => {
     if(typeof evaled != 'string') evaled = inspect(evaled, { depth: 0 })
 
     process.send(evaled)
+    return process.exit(15)
 })
